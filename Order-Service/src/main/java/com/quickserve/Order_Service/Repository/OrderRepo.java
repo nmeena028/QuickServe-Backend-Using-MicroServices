@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderRepo extends JpaRepository<Orders, Long> {
-
+   boolean existsByTableIdAndStatus(Long tableId, String status);
 }

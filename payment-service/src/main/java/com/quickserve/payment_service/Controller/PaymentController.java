@@ -1,5 +1,6 @@
 package com.quickserve.payment_service.Controller;
 
+import com.quickserve.payment_service.Dto.PaymentRequest;
 import com.quickserve.payment_service.Entity.Payment;
 import com.quickserve.payment_service.Service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping("/pay")
-    public ResponseEntity<Payment> makePayment(@RequestBody Payment payment) {
-        Payment processedPayment = paymentService.processPayment(payment);
+    public ResponseEntity<Payment> makePayment(@RequestBody PaymentRequest paymentRequest) {
+        Payment processedPayment = paymentService.processPayment(paymentRequest);
         return ResponseEntity.ok(processedPayment);
     }
 

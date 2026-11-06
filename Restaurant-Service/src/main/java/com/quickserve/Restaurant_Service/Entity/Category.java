@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.quickserve.Restaurant_Service.Entity.Product;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class Category {
     private String name;
 
     // Ek category ke andar multiple products ho sakte hain
+    @JsonBackReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 }

@@ -44,4 +44,6 @@ public class MenuController {
         Product product = menuService.getProductById(id);
         return ResponseEntity.ok(product);
     }
+
+    
 }

@@ -1,5 +1,6 @@
 package com.quickserve.Order_Service.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,13 +17,12 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long productId; // Restaurant service se product ki ID
-
+    private Long productId;
     private Integer quantity;
+    private Double price;
 
-    private Double price; // Jis price par item order kiya gaya
-
+    @JsonBackReference // Yeh JSON serialization mein infinite loop ko rok dega
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", nullable = false)
     private Orders order;
 }

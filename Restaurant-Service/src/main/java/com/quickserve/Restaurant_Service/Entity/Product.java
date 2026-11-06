@@ -1,5 +1,7 @@
 package com.quickserve.Restaurant_Service.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +34,7 @@ public class Product {
     private Boolean available = true;
 
     // Kai saare products ek category se jud sakte hain
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
