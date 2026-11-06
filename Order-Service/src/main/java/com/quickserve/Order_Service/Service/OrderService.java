@@ -1,7 +1,6 @@
 package com.quickserve.Order_Service.Service;
 
 import com.quickserve.Order_Service.Client.RestaurantClient;
-import com.quickserve.Order_Service.Dto.OrderItemDto;
 import com.quickserve.Order_Service.Dto.OrderRequestDto;
 import com.quickserve.Order_Service.Entity.OrderItem;
 import com.quickserve.Order_Service.Entity.Orders;
@@ -20,23 +19,22 @@ public class OrderService {
     private OrderRepo orderRepository;
 
     @Autowired
-    private RestaurantClient restaurantClient; // Feign client jo restaurant service se baat karega
+    private RestaurantClient restaurantClient; 
 
-    // Order Place karne ka complete logic
+
     public Orders placeOrder(OrderRequestDto requestDto) {
         Orders order = new Orders();
         order.setCustomerName(requestDto.getCustomerName());
         order.setPhoneNumber(requestDto.getPhoneNumber());
         order.setTableId(requestDto.getTableId());
-        order.setStatus("PENDING"); // Shuru mein order PENDING rahega
+        order.setStatus("PENDING"); 
         order.setCreatedAt(LocalDateTime.now());
 
         double calculatedTotalAmount = 0.0;
 
-        // Items ko map karna aur Feign client se price fetch karna
+      
         var orderItems = requestDto.getItems().stream().map(itemDto -> {
-            // Restaurant Service ko call karke product ki details mangwayenge
-            // Yahan hum Map ya ek chota DTO use kar sakte hain response lene ke liye
+         
             Map<String, Object> productResponse = (Map<String, Object>) restaurantClient.getProductById(itemDto.getProductId());
             
             Double price = Double.valueOf(productResponse.get("price").toString());
@@ -50,7 +48,7 @@ public class OrderService {
             return orderItem;
         }).collect(Collectors.toList());
 
-        // Total amount calculate karna (Price * Quantity)
+      
         for (OrderItem item : orderItems) {
             calculatedTotalAmount += item.getPrice() * item.getQuantity();
         }
@@ -58,7 +56,11 @@ public class OrderService {
         order.setOrderItems(orderItems);
         order.setTotalAmount(calculatedTotalAmount);
 
-        // Database mein save karna
         return orderRepository.save(order);
+    }
+
+    public Orders getOrderById(Long id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + id));
     }
 }

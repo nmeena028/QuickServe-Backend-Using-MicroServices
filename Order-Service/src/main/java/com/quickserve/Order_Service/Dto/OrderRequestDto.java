@@ -14,6 +14,4 @@ public class OrderRequestDto {
     private String phoneNumber;
     private Long tableId;
     private List<OrderItemDto> items;
-} {
-  
 }
