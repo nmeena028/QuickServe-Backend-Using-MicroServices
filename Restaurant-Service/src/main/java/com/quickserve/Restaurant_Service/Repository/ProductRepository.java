@@ -1,6 +1,8 @@
 package com.quickserve.Restaurant_Service.Repository;
 
 import com.quickserve.Restaurant_Service.Entity.Product;
+import com.quickserve.Restaurant_Service.Entity.Category;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // 2. Kisi specific category ke saare products laane ke liye
     List<Product> findByCategoryId(Long categoryId);
+
+    List<Product> findByCategory(Category category);
 }
