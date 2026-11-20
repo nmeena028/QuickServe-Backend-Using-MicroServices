@@ -3,12 +3,10 @@ package com.quickserve.Order_Service.Controller;
 import com.quickserve.Order_Service.Dto.OrderRequestDto;
 import com.quickserve.Order_Service.Entity.Orders;
 import com.quickserve.Order_Service.Service.OrderService;
-
-import org.apache.hc.core5.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -34,5 +32,17 @@ public class OrderController {
         Orders updatedOrder = orderService.updateOrderStatus(id, status);
         
         return ResponseEntity.ok(updatedOrder);
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<List<Orders>> getOrdersByStatus(@RequestParam String status) {
+        List<Orders> orders = orderService.getOrdersByStatus(status);
+        return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<Orders>> getOrdersList() {
+        List<Orders> orders = orderService.getOrdersList();
+        return ResponseEntity.ok(orders);
     }
 }

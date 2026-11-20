@@ -3,10 +3,15 @@ package com.quickserve.Restaurant_Service.Service;
 
 import com.quickserve.Restaurant_Service.DTO.CategoryDto;
 import com.quickserve.Restaurant_Service.DTO.ProductDto;
+import com.quickserve.Restaurant_Service.DTO.ProductRequestDto;
 import com.quickserve.Restaurant_Service.Entity.Category;
 import com.quickserve.Restaurant_Service.Entity.Product;
 import com.quickserve.Restaurant_Service.Repository.CategoryRepository;
 import com.quickserve.Restaurant_Service.Repository.ProductRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.val;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,9 +65,27 @@ public class MenuService {
         return categoryRepository.save(category);
     }
 
+    public Category getCategorybyId(Long id){
+        return categoryRepository.getReferenceById(id);
+    }
+
     // 3. Naya Product add karne ka method
-    public Product addProduct(Product product) {
-        return productRepository.save(product);
+    @Transactional 
+    public Product addProduct(ProductRequestDto product) {
+        Product p1 = new Product();
+        p1.setName(product.getName());
+        p1.setDescription(product.getDescription());
+        p1.setAvailable(product.getAvailable());
+        p1.setImageUrl(product.getImageUrl());
+        p1.setPrice(product.getPrice());
+        System.out.println("\n");
+        System.out.println("\n");System.out.println("\n");System.out.println("\n");System.out.println("\n");System.out.println("\n");System.out.println("\n");
+        System.out.println(categoryRepository.getReferenceById(product.getCategoryId()
+        ));
+        System.out.println("\n");System.out.println("\n");System.out.println("\n");System.out.println("\n");System.out.println("\n");System.out.println("\n");
+        p1.setCategory(categoryRepository.getReferenceById(product.getCategoryId()));
+
+        return productRepository.save(p1);
     }
 
 }

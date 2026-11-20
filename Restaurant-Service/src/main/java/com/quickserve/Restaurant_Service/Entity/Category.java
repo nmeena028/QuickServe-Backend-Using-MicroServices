@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.quickserve.Restaurant_Service.Entity.Product;
-
 import java.util.List;
 
 @Entity

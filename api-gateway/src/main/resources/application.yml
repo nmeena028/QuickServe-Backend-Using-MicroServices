@@ -1,3 +1,4 @@
+
 server:
   port: 8080
 
@@ -15,10 +16,60 @@ spring:
               lower-case-service-id: true
 
           routes:
+            # Restaurant Service
             - id: restaurant-service
               uri: lb://restaurant-service
               predicates:
                 - Path=/api/restaurant/**
+
+            # Order Service
+            - id: order-service
+              uri: lb://order-service
+              predicates:
+                - Path=/api/orders/**
+
+            # Payment Service
+            - id: payment-service
+              uri: lb://payment-service
+              predicates:
+                - Path=/api/payments/**
+
+            # Restaurant Swagger
+            - id: restaurant-swagger
+              uri: lb://restaurant-service
+              predicates:
+                - Path=/restaurant-service/v3/api-docs
+              filters:
+                - StripPrefix=1
+
+            # Order Swagger
+            - id: order-swagger
+              uri: lb://order-service
+              predicates:
+                - Path=/order-service/v3/api-docs
+              filters:
+                - StripPrefix=1
+
+            # Payment Swagger
+            - id: payment-swagger
+              uri: lb://payment-service
+              predicates:
+                - Path=/payment-service/v3/api-docs
+              filters:
+                - StripPrefix=1
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Restaurant Service
+        url: /restaurant-service/v3/api-docs
+
+      - name: Order Service
+        url: /order-service/v3/api-docs
+
+      - name: Payment Service
+        url: /payment-service/v3/api-docs
 
 eureka:
   client:

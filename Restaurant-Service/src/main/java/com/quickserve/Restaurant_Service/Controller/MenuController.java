@@ -2,6 +2,7 @@ package com.quickserve.Restaurant_Service.Controller;
 
 import com.quickserve.Restaurant_Service.DTO.CategoryDto;
 import com.quickserve.Restaurant_Service.DTO.ProductDto;
+import com.quickserve.Restaurant_Service.DTO.ProductRequestDto;
 import com.quickserve.Restaurant_Service.Entity.Category;
 import com.quickserve.Restaurant_Service.Entity.Product;
 import com.quickserve.Restaurant_Service.Service.MenuService;
@@ -41,7 +42,7 @@ public class MenuController {
 
     // 3. Admin ke liye Product/Item add karne ki API
     @PostMapping("/product")
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> addProduct(@RequestBody ProductRequestDto product) {
         Product savedProduct = menuService.addProduct(product);
         return ResponseEntity.ok(savedProduct);
     }
@@ -54,7 +55,7 @@ public class MenuController {
     }
 
     @GetMapping("menu/{categoryName}")
-    public ResponseEntity<List<Product>> getProductByCategory(@PathVariable("categoryName")  String categoryName){
+    public ResponseEntity<List<Product>> getProductByCategory(@PathVariable("categoryName") String categoryName){
        return ResponseEntity.ok(productService.getProductListByCategory(categoryName));
     }
 
